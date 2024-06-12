@@ -1,5 +1,7 @@
 # Jira-on-WindowsServer-Azure-via-Terraform
-Deploying Jira on Windows Server 2022 hosted on Azure through the use of Terraform and PowerShell
+Deploying Jira on Windows Server 2022 hosted on Azure through the use of Terraform and PowerShell.
+
+Please note that the scripts will need formatting according to terraform standards.
 
 ## Terraform Files
 
