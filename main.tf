@@ -42,15 +42,6 @@ resource "azurerm_windows_virtual_machine" "main" {
     version   = "${var.config["vm_image_version"]}"
   }
 
-  admin_username = var.admin_username
-  admin_password = var.admin_password
-
-  os_profile {
-    computer_name  = var.vm_name
-    admin_username = var.admin_username
-    admin_password = var.admin_password
-  }
-
   os_profile_windows_config {
     provision_vm_agent = true
   }
@@ -100,7 +91,7 @@ resource "azurerm_virtual_machine_data_disk_attachment" "managed_disk_attach" {
     }
 
     inline = [
-      "powershell.exe .\\scripts\\configJiraDb.ps1 -Server \"${azurerm_postgresql_flexible_server.default.fully_qualified_domain_name}\" -Username \"${azurerm_postgresql_flexible_server.default.administrator_login}\" -Password \"${azurerm_postgresql_flexible_server.default.administrator_password}\"",
+      "powershell.exe .\deploy.ps1 -Server \"${azurerm_postgresql_flexible_server.default.fully_qualified_domain_name}\" -Username \"${azurerm_postgresql_flexible_server.default.administrator_login}\" -Password \"${azurerm_postgresql_flexible_server.default.administrator_password}\"",
     ]
   }
 
