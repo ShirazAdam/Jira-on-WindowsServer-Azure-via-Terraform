@@ -15,6 +15,22 @@ $jiraInstallerPath = "C:\atlassian-jira-software-9.16.0-x64.exe"
 Invoke-WebRequest -Uri $jiraInstallerUrl -OutFile $jiraInstallerPath
 Start-Process -FilePath $jiraInstallerPath -ArgumentList "/S" -Wait
 
+#[CmdLetbinding()]
+#param (
+#[string]$Server,
+#[string]$Username,
+#[string]$Password
+#)
+
+#If ($PSBoundParameters.Count < 3) {
+#	Write-Host "Not enough parameters"
+#	Read-Host
+#	exit
+#}
+
+#deploy dbconfig.xml
+#.\${Jira-application-dir}\bin\config.bat $Server $Username $Password
+
 # Configure Jira to start automatically
 sc.exe create "Jira" binPath= "\"C:\Program Files\Atlassian\Jira\bin\start-jira.bat\""
 sc.exe start "Jira"
