@@ -42,6 +42,19 @@ resource "azurerm_windows_virtual_machine" "main" {
     version   = "${var.config["vm_image_version"]}"
   }
 
+  admin_username = var.admin_username
+  admin_password = var.admin_password
+
+  os_profile {
+    computer_name  = var.vm_name
+    admin_username = var.admin_username
+    admin_password = var.admin_password
+  }
+
+  os_profile_windows_config {
+    provision_vm_agent = true
+  }
+
   boot_diagnostics {
     storage_account_uri = azurerm_storage_account.my_storage_account.primary_blob_endpoint
   }
@@ -77,20 +90,6 @@ resource "azurerm_virtual_machine_data_disk_attachment" "managed_disk_attach" {
   lun                = 0
   caching            = "ReadWrite"
 }
-
-resource "null_resource" "remote-exec-vm-1" {
-  provisioner "remote-exec" {
-    connection {
-      type     = "ssh"
-      host     = "${azurerm_public_ip.vm-pip.ip_address}"
-      user     = "${var.config["vm_username"]}"
-      password = "${var.config["vm_password"]}"
-    }
-
-    inline = [
-      "powershell.exe .\\scripts\\installJira.ps1",
-    ]
-  }
 
   provisioner "remote-exec" {
     connection {
