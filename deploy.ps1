@@ -5,15 +5,12 @@ Set-ExecutionPolicy Bypass -Scope Process -Force;
 [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; 
 iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 
-# Install OpenJDK 11
-choco install openjdk11 -y
-
 # Download and Install Jira
 $jiraInstallerUrl = "https://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-software-9.16.0-x64.exe"
 $jiraInstallerPath = "C:\atlassian-jira-software-9.16.0-x64.exe"
 
 Invoke-WebRequest -Uri $jiraInstallerUrl -OutFile $jiraInstallerPath
-Start-Process -FilePath $jiraInstallerPath -ArgumentList "/S" -Wait
+Start-Process -FilePath $jiraInstallerPath -ArgumentList "-s -q -varfile response.varfile" -Wait
 
 #[CmdLetbinding()]
 #param (
